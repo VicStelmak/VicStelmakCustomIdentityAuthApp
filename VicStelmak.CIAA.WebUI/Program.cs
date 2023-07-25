@@ -1,8 +1,18 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using VicStelmak.CIAA.WebUI.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using VicStelmak.CIAA.WebUI.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("CustomIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'CustomIdentityDbContextConnection' not found.");
+
+builder.Services.AddDbContext<CustomIdentityDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<CustomIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<CustomIdentityDbContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -27,5 +37,6 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+app.UseAuthentication();;
 
 app.Run();
