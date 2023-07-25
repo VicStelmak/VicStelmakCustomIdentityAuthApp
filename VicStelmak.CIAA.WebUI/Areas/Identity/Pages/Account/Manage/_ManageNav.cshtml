@@ -1,4 +1,6 @@
-﻿@inject SignInManager<CustomIdentityUser> SignInManager
+﻿@using VicStelmak.CIAA.Infrastructure.Identity
+
+@inject SignInManager<CustomIdentityUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using VicStelmak.CIAA.WebUI.Areas.Identity.Data;
+using VicStelmak.CIAA.Infrastructure.Identity;
 
 namespace VicStelmak.CIAA.WebUI.Areas.Identity.Pages.Account.Manage
 {
