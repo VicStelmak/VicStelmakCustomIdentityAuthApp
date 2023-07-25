@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VicStelmak.CIAA.Infrastructure", "VicStelmak.CIAA.Infrastructure\VicStelmak.CIAA.Infrastructure.csproj", "{E43BC8E2-10D1-4C18-A30F-B5654CA562CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VicStelmak.CIAA.Infrastructure", "VicStelmak.CIAA.Infrastructure\VicStelmak.CIAA.Infrastructure.csproj", "{E43BC8E2-10D1-4C18-A30F-B5654CA562CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VicStelmak.CIAA.WebUI", "VicStelmak.CIAA.WebUI\VicStelmak.CIAA.WebUI.csproj", "{C2964DC7-DC32-46F7-818D-FE7E86F240BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VicStelmak.CIAA.WebUI", "VicStelmak.CIAA.WebUI\VicStelmak.CIAA.WebUI.csproj", "{C2964DC7-DC32-46F7-818D-FE7E86F240BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
