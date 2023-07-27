@@ -11,7 +11,7 @@ using VicStelmak.CIAA.Infrastructure.DataAccess;
 namespace VicStelmak.CIAA.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20230725150549_CreateModifiedIdentitySchema")]
+    [Migration("20230727132522_CreateModifiedIdentitySchema")]
     partial class CreateModifiedIdentitySchema
     {
         /// <inheritdoc />

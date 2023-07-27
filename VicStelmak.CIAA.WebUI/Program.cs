@@ -2,10 +2,12 @@ using VicStelmak.CIAA.WebUI.Data;
 using VicStelmak.CIAA.Infrastructure.DataAccess;
 using VicStelmak.CIAA.Infrastructure.Identity;
 using VicStelmak.CIAA.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDefaultIdentity<CustomIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CustomIdentityDbContext>();
 
 // Add services to the container.
@@ -30,8 +32,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-app.UseAuthentication();;
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

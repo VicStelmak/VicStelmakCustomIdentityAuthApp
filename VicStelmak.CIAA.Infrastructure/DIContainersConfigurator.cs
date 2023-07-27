@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;
 using VicStelmak.CIAA.Infrastructure.DataAccess;
+using VicStelmak.CIAA.Infrastructure.Identity;
 
 namespace VicStelmak.CIAA.Infrastructure
 {
@@ -21,6 +24,8 @@ namespace VicStelmak.CIAA.Infrastructure
                     mySqlOptions.MigrationsAssembly(typeof(CustomIdentityDbContext).Assembly.FullName);
                 }
             ));
+
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<CustomIdentityUser>>();
 
             return services;
         }
