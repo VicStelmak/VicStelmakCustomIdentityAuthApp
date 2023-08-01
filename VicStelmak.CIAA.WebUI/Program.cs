@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDefaultIdentity<CustomIdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<CustomIdentityUser>(options => {
+    options.SignIn.RequireConfirmedAccount = true;
+    options.User.RequireUniqueEmail = true;
+}) 
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CustomIdentityDbContext>();
 
