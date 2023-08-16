@@ -17,6 +17,7 @@ namespace VicStelmak.CIAA.Infrastructure
         {
             var connectionString = configuration.GetConnectionString("CustomIdentityDbContextConnection") ?? 
                 throw new InvalidOperationException("Connection string 'CustomIdentityDbContextConnection' not found.");
+
             services.AddDbContext<CustomIdentityDbContext>(options =>
                 options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 33)), mySqlOptions =>
                 {
@@ -24,8 +25,11 @@ namespace VicStelmak.CIAA.Infrastructure
                     mySqlOptions.MigrationsAssembly(typeof(CustomIdentityDbContext).Assembly.FullName);
                 }
             ));
+            services.AddDbContext<IdentityManagementDbContext>(options =>
+                options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 33))));
 
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<CustomIdentityUser>>();
+            services.AddScoped<IdentityManagement>();
 
             return services;
         }

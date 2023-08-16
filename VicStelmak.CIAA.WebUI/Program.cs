@@ -9,9 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDefaultIdentity<CustomIdentityUser>(options => {
     options.SignIn.RequireConfirmedAccount = true;
     options.User.RequireUniqueEmail = true;
-}) 
-    .AddRoles<IdentityRole>()
+})
+    .AddRoles<CustomIdentityRole>()
     .AddEntityFrameworkStores<CustomIdentityDbContext>();
+
+builder.Services.AddIdentityCore<CustomIdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.User.RequireUniqueEmail = true;
+})
+    .AddRoles<CustomIdentityRole>()
+    .AddEntityFrameworkStores<IdentityManagementDbContext>();
 
 // Add services to the container.
 builder.Services.ConfigureDependencyInjection(builder.Configuration);

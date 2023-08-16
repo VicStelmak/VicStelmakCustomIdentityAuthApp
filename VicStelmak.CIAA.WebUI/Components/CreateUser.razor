@@ -1,0 +1,75 @@
+﻿@page "/createuser"
+@using VicStelmak.CIAA.Infrastructure.Identity;
+
+@inject IdentityManagement _identityManager;
+
+<EditForm Model="@user" OnValidSubmit="@OnCreateUser">
+    <h3><b>Create User</b></h3>
+    <hr />
+    <div class="row">
+        <div class="col3">
+            Username:
+        </div>
+        <div class="col9">
+            <InputText id="userName" @bind-Value="user.UserName" />
+        </div>
+        <div class="col3">
+            Name:
+        </div>
+        <div class="col9">
+            <InputText id="name" @bind-Value="user.Name" />
+        </div>
+        <div class="col3">
+            Email:
+        </div>
+        <div class="col9">
+            <InputText id="email" @bind-Value="user.Email" />
+        </div>
+        <div class="col3">
+            Password:
+        </div>
+        <div class="col9">
+            <InputText id="password" type="password" @bind-Value="user.Password" />
+        </div>
+    </div>
+    <br />
+
+    <button type="submit">Save</button>
+    <br />
+    <br />
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+</EditForm>
+
+@if (createUser)
+{
+    @if (response?.Success == true)
+    {
+        <div style="color:green;">User created successfully. </div>
+        <div>
+            <br />
+            The user must be confirmed by email before they can log in.
+            <br /><br />
+            You can optionally set the EmailConfirmed field in the user
+            record in the dbo.AspNetUsers table to True.
+        </div>
+    }
+    else
+    {
+        <div style="color:red;">An error has occurred when creating user: @response?.Messages</div>
+    }
+}
+
+@code {
+    private ViewModels.CreateUserViewModel user = new();
+    private IdentityManagementResponse? response = null;
+    private bool createUser = false;
+
+    private async void OnCreateUser()
+    {
+        createUser = true;
+        response = await _identityManager!.CreateUser(user.UserName!, user.Name!, user.Email!, user.Password!);
+        StateHasChanged();
+    }
+}

@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VicStelmak.CIAA.Infrastructure.Identity;
 
 namespace VicStelmak.CIAA.Infrastructure.DataAccess;
 
-public class CustomIdentityDbContext : IdentityDbContext<CustomIdentityUser>
+public class CustomIdentityDbContext : IdentityDbContext<CustomIdentityUser, CustomIdentityRole, string>
 {
     public CustomIdentityDbContext(DbContextOptions<CustomIdentityDbContext> options)
         : base(options)
@@ -14,38 +13,29 @@ public class CustomIdentityDbContext : IdentityDbContext<CustomIdentityUser>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(builder);
-        builder.HasDefaultSchema("Identity");
-        builder.Entity<CustomIdentityUser>(entity =>
-        {
-            entity.ToTable(name: "User");
-        });
-        builder.Entity<IdentityRole>(entity =>
-        {
-            entity.ToTable(name: "Role");
-        });
-        builder.Entity<IdentityUserRole<string>>(entity =>
-        {
-            entity.ToTable("UserRoles");
-        });
-        builder.Entity<IdentityUserClaim<string>>(entity =>
-        {
-            entity.ToTable("UserClaims");
-        });
-        builder.Entity<IdentityUserLogin<string>>(entity =>
-        {
-            entity.ToTable("UserLogins");
-        });
-        builder.Entity<IdentityRoleClaim<string>>(entity =>
-        {
-            entity.ToTable("RoleClaims");
-        });
-        builder.Entity<IdentityUserToken<string>>(entity =>
-        {
-            entity.ToTable("UserTokens");
-        });
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
+
+        base.OnModelCreating(builder);
+
+        builder.Entity<CustomIdentityUser>()
+        .HasMany(p => p.Roles).WithOne()
+        .HasForeignKey(p => p.UserId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<CustomIdentityUser>()
+            .HasMany(e => e.Claims)
+            .WithOne().HasForeignKey(e => e.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<CustomIdentityRole>()
+            .HasMany(r => r.Claims).WithOne()
+            .HasForeignKey(r => r.RoleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
+
